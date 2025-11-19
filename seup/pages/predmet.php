@@ -983,14 +983,16 @@ print '</div>';
 print '</div>';
 print '</div>';
 
-// JavaScript for enhanced functionality
-print '<script src="/custom/seup/js/seup-modern.js"></script>';
-print '<script src="/custom/seup/js/predmet-sortiranje.js"></script>';
-print '<script src="/custom/seup/js/predmet.js"></script>';
-
 ?>
 
 <?php
 llxFooter();
+?>
+
+<script src="/custom/seup/js/seup-modern.js"></script>
+<script src="/custom/seup/js/predmet-sortiranje.js"></script>
+<script src="/custom/seup/js/predmet.js"></script>
+
+<?php
 $db->close();
 ?>
