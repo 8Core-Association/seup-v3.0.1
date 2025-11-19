@@ -224,6 +224,8 @@
 ## 🔗 Poveznice na vazne fileove
 
 - **Glavni file:** `/seup/pages/predmet.php` (160 linija)
+- **JavaScript:** `/seup/js/predmet.js`
+- **CSS:** `/seup/css/predmet.css`
 - **Klase:**
   - `/seup/class/predmet_data_loader.class.php`
   - `/seup/class/predmet_action_handler.class.php`
