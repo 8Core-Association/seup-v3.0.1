@@ -90,10 +90,10 @@
 
 ## 📊 Struktura podataka (draft)
 
-### Tablica: `llx_a_otprema`
+### Tablica: `a_otprema`
 ```sql
 - id
-- fk_predmet (foreign key -> llx_seup_predmet)
+- fk_predmet (foreign key -> seup_predmet)
 - omat_broj (generiran ili unesen)
 - primatelj (tekst ili foreign key -> suradnici)
 - datum_otpreme
@@ -104,10 +104,10 @@
 - datec (timestamp)
 ```
 
-### Tablica: `llx_a_zaprimanje`
+### Tablica: `a_zaprimanje`
 ```sql
 - id
-- fk_predmet (foreign key -> llx_seup_predmet)
+- fk_predmet (foreign key -> seup_predmet)
 - broj_posiljatelja (npr. CLASS-100/2025-01-01)
 - posiljatelj (tekst ili foreign key -> suradnici)
 - datum_zaprimanja
@@ -188,7 +188,7 @@
 - [ ] Skicirati UI (wireframes)
 
 ### FAZA 2: Baza podataka
-- [ ] Kreirati migration za tablice `llx_a_otprema` i `llx_a_zaprimanje`
+- [ ] Kreirati migration za tablice `a_otprema` i `a_zaprimanje`
 - [ ] Dodati foreign key constrainte
 - [ ] Testirati na testnim podacima
 
