@@ -230,8 +230,10 @@
   - `/seup/class/predmet_data_loader.class.php`
   - `/seup/class/predmet_action_handler.class.php`
   - `/seup/class/predmet_view.class.php`
-- **OMAT generator:** `/seup/class/omat_generator.class.php`
-- **Prilog helper:** `/seup/class/prilog_helper.class.php`
+  - `/seup/class/request_handler.class.php`
+- **Helperi:**
+  - `/seup/class/omat_generator.class.php`
+  - `/seup/class/prilog_helper.class.php`
 
 ---
 
