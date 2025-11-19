@@ -235,19 +235,80 @@ CREATE TABLE IF NOT EXISTS llx_a_arhiva (
 -- EXTEND EXISTING TABLE: llx_ecm_files
 -- Purpose: Add digital signature detection columns
 -- =============================================================================
--- Note: These ALTER statements will only execute if columns don't exist
--- Dolibarr will handle this gracefully during module installation
+-- Note: These ALTER statements check for column existence before adding
+-- MySQL/MariaDB compatible approach using procedural blocks
 
-ALTER TABLE llx_ecm_files
-    ADD COLUMN IF NOT EXISTS digital_signature TINYINT(1) DEFAULT 0 COMMENT 'Has digital signature (0=no, 1=yes)',
-    ADD COLUMN IF NOT EXISTS signature_info JSON DEFAULT NULL COMMENT 'Signature metadata (JSON format)',
-    ADD COLUMN IF NOT EXISTS signature_date DATETIME DEFAULT NULL COMMENT 'Digital signature date',
-    ADD COLUMN IF NOT EXISTS signer_name VARCHAR(255) DEFAULT NULL COMMENT 'Name of the signer',
-    ADD COLUMN IF NOT EXISTS signature_status ENUM('valid','invalid','expired','unknown') DEFAULT 'unknown' COMMENT 'Signature validation status';
+-- Add digital_signature column
+SET @exist := (SELECT COUNT(*) FROM information_schema.COLUMNS
+               WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = 'llx_ecm_files'
+               AND COLUMN_NAME = 'digital_signature');
+SET @sqlstmt := IF(@exist = 0,
+                   'ALTER TABLE llx_ecm_files ADD COLUMN digital_signature TINYINT(1) DEFAULT 0 COMMENT ''Has digital signature (0=no, 1=yes)''',
+                   'SELECT ''Column digital_signature already exists''');
+PREPARE stmt FROM @sqlstmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add signature_info column
+SET @exist := (SELECT COUNT(*) FROM information_schema.COLUMNS
+               WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = 'llx_ecm_files'
+               AND COLUMN_NAME = 'signature_info');
+SET @sqlstmt := IF(@exist = 0,
+                   'ALTER TABLE llx_ecm_files ADD COLUMN signature_info JSON DEFAULT NULL COMMENT ''Signature metadata (JSON format)''',
+                   'SELECT ''Column signature_info already exists''');
+PREPARE stmt FROM @sqlstmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add signature_date column
+SET @exist := (SELECT COUNT(*) FROM information_schema.COLUMNS
+               WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = 'llx_ecm_files'
+               AND COLUMN_NAME = 'signature_date');
+SET @sqlstmt := IF(@exist = 0,
+                   'ALTER TABLE llx_ecm_files ADD COLUMN signature_date DATETIME DEFAULT NULL COMMENT ''Digital signature date''',
+                   'SELECT ''Column signature_date already exists''');
+PREPARE stmt FROM @sqlstmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add signer_name column
+SET @exist := (SELECT COUNT(*) FROM information_schema.COLUMNS
+               WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = 'llx_ecm_files'
+               AND COLUMN_NAME = 'signer_name');
+SET @sqlstmt := IF(@exist = 0,
+                   'ALTER TABLE llx_ecm_files ADD COLUMN signer_name VARCHAR(255) DEFAULT NULL COMMENT ''Name of the signer''',
+                   'SELECT ''Column signer_name already exists''');
+PREPARE stmt FROM @sqlstmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add signature_status column
+SET @exist := (SELECT COUNT(*) FROM information_schema.COLUMNS
+               WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = 'llx_ecm_files'
+               AND COLUMN_NAME = 'signature_status');
+SET @sqlstmt := IF(@exist = 0,
+                   'ALTER TABLE llx_ecm_files ADD COLUMN signature_status ENUM(''valid'',''invalid'',''expired'',''unknown'') DEFAULT ''unknown'' COMMENT ''Signature validation status''',
+                   'SELECT ''Column signature_status already exists''');
+PREPARE stmt FROM @sqlstmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 -- Add index for digital signature queries
-ALTER TABLE llx_ecm_files
-    ADD KEY IF NOT EXISTS idx_digital_signature (digital_signature);
+SET @exist := (SELECT COUNT(*) FROM information_schema.STATISTICS
+               WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = 'llx_ecm_files'
+               AND INDEX_NAME = 'idx_digital_signature');
+SET @sqlstmt := IF(@exist = 0,
+                   'ALTER TABLE llx_ecm_files ADD KEY idx_digital_signature (digital_signature)',
+                   'SELECT ''Index idx_digital_signature already exists''');
+PREPARE stmt FROM @sqlstmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 
 
 -- =============================================================================

@@ -415,46 +415,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Handle document deletion (duplicate - second occurrence)
-    if ($action === 'delete_document') {
-        @ob_end_clean();
-        header('Content-Type: application/json');
-        ob_start();
-        
-        $filename = GETPOST('filename', 'alpha');
-        $filepath = GETPOST('filepath', 'alpha');
-        
-        if (empty($filename) || empty($filepath)) {
-            echo json_encode(['success' => false, 'error' => 'Missing filename or filepath']);
-            exit;
-        }
-        
-        try {
-            // Delete from filesystem
-            $full_path = DOL_DATA_ROOT . '/ecm/' . rtrim($filepath, '/') . '/' . $filename;
-            if (file_exists($full_path)) {
-                unlink($full_path);
-            }
-            
-            // Delete from ECM database
-            $sql = "DELETE FROM " . MAIN_DB_PREFIX . "ecm_files 
-                    WHERE filepath = '" . $db->escape(rtrim($filepath, '/')) . "'
-                    AND filename = '" . $db->escape($filename) . "'
-                    AND entity = " . $conf->entity;
-            
-            if ($db->query($sql)) {
-                echo json_encode(['success' => true, 'message' => 'Dokument je uspješno obrisan']);
-            } else {
-                echo json_encode(['success' => false, 'error' => 'Database error: ' . $db->lasterror()]);
-            }
-        } catch (Exception $e) {
-            echo json_encode(['success' => false, 'error' => $e->getMessage()]);
-        }
-
-        ob_end_flush();
-        exit;
-    }
-
     // Handle omat generation
     if ($action === 'generate_omot') {
         // Clear ALL output buffers
