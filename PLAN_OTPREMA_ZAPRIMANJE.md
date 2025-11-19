@@ -90,7 +90,7 @@
 
 ## 📊 Struktura podataka (draft)
 
-### Tablica: `seup_otprema`
+### Tablica: `llx_a_otprema`
 ```sql
 - id
 - fk_predmet (foreign key -> llx_seup_predmet)
@@ -104,7 +104,7 @@
 - datec (timestamp)
 ```
 
-### Tablica: `seup_zaprimanje`
+### Tablica: `llx_a_zaprimanje`
 ```sql
 - id
 - fk_predmet (foreign key -> llx_seup_predmet)
@@ -188,7 +188,7 @@
 - [ ] Skicirati UI (wireframes)
 
 ### FAZA 2: Baza podataka
-- [ ] Kreirati migration za tablice `seup_otprema` i `seup_zaprimanje`
+- [ ] Kreirati migration za tablice `llx_a_otprema` i `llx_a_zaprimanje`
 - [ ] Dodati foreign key constrainte
 - [ ] Testirati na testnim podacima
 
